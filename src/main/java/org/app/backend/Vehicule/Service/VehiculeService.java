@@ -1,6 +1,7 @@
 package org.app.backend.Vehicule.Service;
 
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.app.backend.Vehicule.Model.Vehicule;
 import org.app.backend.Vehicule.Rep.VehiculeRep;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class VehiculeService {
 
     public Vehicule findByMatricule(String matricule) {
@@ -50,7 +52,6 @@ public class VehiculeService {
         vehiculeRep.save(existingVehicule);
         return 0;
     }
-    @Autowired
-    private VehiculeRep vehiculeRep;
+    private final VehiculeRep vehiculeRep;
 
 }
