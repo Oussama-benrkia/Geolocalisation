@@ -67,7 +67,7 @@ public class UserControl {
     }
 
 @PostMapping
-    public ResponseEntity<UserResp> Create_User(@Valid @ModelAttribute UserRequest userRequest){
+    public ResponseEntity<UserResp> Create_User(@Valid @ModelAttribute BaseUserRequest userRequest){
     UserResp response = userService.Create_User(userRequest);
         if (response != null) {
             return ResponseEntity.ok(response);
@@ -76,7 +76,7 @@ public class UserControl {
         }
     }
     @PutMapping("/{id}")
-    public ResponseEntity<UserResp> Update_Heb(@PathVariable("id") Long id, @Valid @ModelAttribute UserRequestUp userRequest){
+    public ResponseEntity<UserResp> Update_Heb(@PathVariable("id") Long id, @Valid @ModelAttribute BaseUserRequestUp userRequest){
         UserResp response = userService.Update_User(userRequest,id);
         if (response != null) {
             return ResponseEntity.ok(response);

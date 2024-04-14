@@ -78,7 +78,7 @@ public class UserService {
                 })
                 .collect(Collectors.toList());
     }
-    public UserResp Create_User(UserRequest req) {
+    public UserResp Create_User(BaseUserRequest req) {
         String img="";
         if(req.getImage()!=null){
             img=imgService.addimage(req.getImage(),"Users");
@@ -87,8 +87,8 @@ public class UserService {
                 .Last_name(req.getLastname())
                 .email(req.getEmail())
                 .password(passwordEncoder.encode(req.getPassword()))
-                .role((req.getRole().toLowerCase().equals(Role.Admin.name().toLowerCase()))?Role.Admin:Role.User)
                 .image(img)
+                .role(Role.Admin)
                 .build();
         return new UserResp(repUser.save(user));
     }
@@ -107,7 +107,7 @@ public class UserService {
         return null;
     }
     /***-----------------------------**/
-    public UserResp Update_User(UserRequestUp userRequest, Long id) {
+    public UserResp Update_User(BaseUserRequestUp userRequest, Long id) {
         User user = repUser.findById(id).orElse(null);
         if (user != null) {
             if (!userRequest.getFirstname().isEmpty()) {
@@ -122,9 +122,7 @@ public class UserService {
             if (!userRequest.getPassword().isEmpty()) {
                 user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
             }
-            if (!userRequest.getRole().isEmpty()) {
-                user.setRole((userRequest.getRole().toLowerCase().equals(Role.Admin.name().toLowerCase()))?Role.Admin:Role.User);
-            }
+
             if (userRequest.getImage() != null) {
                 if (!user.getImage().isEmpty()) {
                     imgService.deleteimage(user.getImage());

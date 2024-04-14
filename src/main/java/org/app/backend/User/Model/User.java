@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.app.backend.Auten.Model.Token;
 import org.app.backend.User.Model.Enum.Role;
+import org.app.backend.Vehicule.Model.Vehicule;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -37,6 +38,8 @@ public class User implements UserDetails {
     private LocalDateTime datcrt;
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Token> tokens;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Vehicule> vehicule;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));

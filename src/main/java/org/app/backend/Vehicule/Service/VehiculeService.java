@@ -1,6 +1,7 @@
 package org.app.backend.Vehicule.Service;
 
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.app.backend.Vehicule.Model.Vehicule;
 import org.app.backend.Vehicule.Rep.VehiculeRep;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class VehiculeService {
 
     public Vehicule findByMatricule(String matricule) {
@@ -59,7 +61,6 @@ public class VehiculeService {
         vehiculeRep.deleteById(id);
         return existingVehicule; // Retourner le véhicule supprimé
     }
-    @Autowired
-    private VehiculeRep vehiculeRep;
+    private final VehiculeRep vehiculeRep;
 
 }

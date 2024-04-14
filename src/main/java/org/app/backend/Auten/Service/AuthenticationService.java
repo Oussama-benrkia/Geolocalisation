@@ -34,7 +34,7 @@ public class AuthenticationService {
                 .Last_name(req.getLastname())
                 .email(req.getEmail())
                 .password(passwordEncoder.encode(req.getPassword()))
-                .role(Role.User)
+                .role(Role.Admin)
                 .image(img)
                 .build();
         rep.save(user);
