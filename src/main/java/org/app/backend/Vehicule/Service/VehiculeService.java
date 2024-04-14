@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class VehiculeService {
@@ -14,10 +15,7 @@ public class VehiculeService {
     public Vehicule findByMatricule(String matricule) {
         return vehiculeRep.findByMatricule(matricule);
     }
-@Transactional
-    public Vehicule deleteByMatricule(String matricule) {
-        return vehiculeRep.deleteByMatricule(matricule);
-    }
+
 
     public List<Vehicule> findByMatriculeAndModele(String matricule, String modele) {
         return vehiculeRep.findByMatriculeAndModele(matricule, modele);
@@ -27,28 +25,39 @@ public class VehiculeService {
         return vehiculeRep.findAll();
     }
 
-    public int addVehicule(Vehicule vehicule) {
+    public Vehicule createVehicule(Vehicule vehicule) {
         Vehicule existingVehicule = vehiculeRep.findByMatricule(vehicule.getMatricule());
         if (existingVehicule != null) {
-            return -1;
+            return null;
         }
-        vehiculeRep.save(vehicule);
-        return 0;
+       return  vehiculeRep.save(vehicule);
     }
     @Transactional
-    public int editVehicule(String matricule, Vehicule vehicule) {
-        Vehicule existingVehicule = vehiculeRep.findByMatricule(matricule);
-        if (existingVehicule == null) {
-            return -1;
+    public Vehicule editVehicule(long id, Vehicule vehicule) {
+        Optional<Vehicule> existingVehiculeOptional = vehiculeRep.findById(id);
+        if (existingVehiculeOptional.isEmpty()) {
+            return null;
         }
+        Vehicule existingVehicule = existingVehiculeOptional.get();
         existingVehicule.setMatricule(vehicule.getMatricule());
         existingVehicule.setNom(vehicule.getNom());
         existingVehicule.setModele(vehicule.getModele());
         existingVehicule.setImage(vehicule.getImage());
         existingVehicule.setEtat(vehicule.isEtat());
         existingVehicule.setStatus(vehicule.getStatus());
-        vehiculeRep.save(existingVehicule);
-        return 0;
+        Vehicule updatedVehicule = vehiculeRep.save(existingVehicule);
+        return updatedVehicule;
+    }
+    @Transactional
+    public Vehicule deleteVehicule(long id) {
+        Optional<Vehicule> existingVehiculeOptional = vehiculeRep.findById(id);
+        if (existingVehiculeOptional.isEmpty()) {
+            return null; // Le véhicule avec l'ID spécifié n'existe pas
+        }
+        // Le véhicule existe, donc nous pouvons le supprimer
+        Vehicule existingVehicule = existingVehiculeOptional.get();
+        vehiculeRep.deleteById(id);
+        return existingVehicule; // Retourner le véhicule supprimé
     }
     @Autowired
     private VehiculeRep vehiculeRep;

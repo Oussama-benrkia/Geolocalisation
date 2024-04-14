@@ -10,7 +10,6 @@ import java.util.List;
 public interface VehiculeRep extends JpaRepository<Vehicule, Long>{
 
     Vehicule findByMatricule(String matricule);
-    Vehicule deleteByMatricule(String matricule);
     List<Vehicule> findByMatriculeAndModele(String matricule, String modele);
 
 
