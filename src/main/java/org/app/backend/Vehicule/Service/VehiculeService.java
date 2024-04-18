@@ -1,5 +1,6 @@
 package org.app.backend.Vehicule.Service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.app.backend.Vehicule.Model.Vehicule;
@@ -32,6 +33,7 @@ public class VehiculeService {
         if (existingVehicule != null) {
             return null;
         }
+        ObjectMapper mapper = new ObjectMapper();
        return  vehiculeRep.save(vehicule);
     }
     @Transactional
