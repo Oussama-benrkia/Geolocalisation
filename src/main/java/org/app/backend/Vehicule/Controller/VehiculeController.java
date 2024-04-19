@@ -51,8 +51,10 @@ public class VehiculeController {
         }
     }
     @GetMapping
-    public ResponseEntity<List<VehiculeResp>> findAll() {
-        List<Vehicule> vehicules = vehiculeService.findAll();
+    public ResponseEntity<List<VehiculeResp>> findAll(
+            @RequestParam(defaultValue = "")String search
+    ) {
+        List<Vehicule> vehicules = vehiculeService.findAll(search);
         List<VehiculeResp> vehiculesResp = new ArrayList<>();
         for (Vehicule vehicule : vehicules) {
             vehiculesResp.add(new VehiculeResp(vehicule));
@@ -62,10 +64,12 @@ public class VehiculeController {
     @GetMapping
     public ResponseEntity<Page<VehiculeResp>> findAllPag(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "8") int size
+            @RequestParam(defaultValue = "8") int size,
+            @RequestParam(defaultValue = "")String search
+
 
     ){        Pageable pageable = PageRequest.of(page, size);
-        Page<Vehicule> vehicules = vehiculeService.findAllpage(pageable);
+        Page<Vehicule> vehicules = vehiculeService.findAllpage(search,pageable);
 
         return  ResponseEntity.ok(vehicules.map(VehiculeResp::new));
     }

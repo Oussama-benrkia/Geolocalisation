@@ -65,10 +65,16 @@ public class VehiculeService {
     public List<Vehicule> findByMatriculeAndModele(String matricule, String modele) {
         return vehiculeRep.findByMatriculeAndModele(matricule, modele);
     }
-    public List<Vehicule> findAll() {
+    public List<Vehicule> findAll(String se) {
+        if(!se.isEmpty()) {
+            return vehiculeRep.findAllByNomContainingOrMatriculeContainingOrModeleContaining(se,se,se);
+        }
         return vehiculeRep.findAll();
     }
-    public Page<Vehicule> findAllpage(Pageable p) {
+    public Page<Vehicule> findAllpage(String se,Pageable p) {
+        if(!se.isEmpty()) {
+            return vehiculeRep.findAllByNomContainingOrMatriculeContainingOrModeleContaining(se,se,se,p);
+        }
         return vehiculeRep.findAll(p);
     }
     public Vehicule createVehicule(VehiculeRequest vehiculereq) {
