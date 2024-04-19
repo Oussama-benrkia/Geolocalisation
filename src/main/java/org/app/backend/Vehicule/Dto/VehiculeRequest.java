@@ -26,7 +26,7 @@ public class VehiculeRequest {
     @NotEmpty
     private boolean etat;
     @NotEmpty
-    private String status;
+    private boolean status;
     @NotEmpty
     private String type;
     @NotNull

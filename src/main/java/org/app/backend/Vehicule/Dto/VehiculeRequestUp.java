@@ -24,9 +24,9 @@ public class VehiculeRequestUp {
     @NotNull
     private boolean etat;
     @NotNull
-    private String status;
+    private boolean status;
     @NotNull
     private String type;
     @NotNull
-    private List<MultipartFile> image;
+    private MultipartFile image;
 }
