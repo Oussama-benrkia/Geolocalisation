@@ -10,6 +10,7 @@ import org.app.backend.Util.ImgService;
 import org.app.backend.Vehicule.Dto.VehiculeRequest;
 import org.app.backend.Vehicule.Dto.VehiculeRequestUp;
 import org.app.backend.Vehicule.Dto.VehiculeResp;
+import org.app.backend.Vehicule.Model.Enum.Status;
 import org.app.backend.Vehicule.Model.Enum.Type;
 import org.app.backend.Vehicule.Model.Vehicule;
 import org.app.backend.Vehicule.Rep.VehiculeRep;
@@ -47,6 +48,17 @@ public class VehiculeService {
         }
         throw new IllegalArgumentException("No enum constant found for input: " + input);
     }
+    private Status getStatus(String input) {
+        for (Status status : Status.values()) {
+            if (status.name().equalsIgnoreCase(input)) {
+                return status;
+            }
+        }
+        throw new IllegalArgumentException("No enum constant found for input: " + input);
+    }
+    public List<String> getallStatus(){
+        return enumToList(Status.values());
+    }
     public Vehicule findByMatricule(String matricule) {
         return vehiculeRep.findByMatricule(matricule);
     }
@@ -73,6 +85,7 @@ public class VehiculeService {
         }
         v.setImage(img);
         v.setType(getType(vehiculereq.getType()));
+        v.setStatus(getStatus(vehiculereq.getStatus()));
         v.setMatricule(vehiculereq.getMatricule());
         v.setEtat(vehiculereq.isEtat());
         v.setNom(vehiculereq.getNom());
@@ -108,6 +121,9 @@ public class VehiculeService {
         }
         if(vehiculerequp.getType()!=null){
             existingVehicule.setType(getType(vehiculerequp.getType()));
+        }
+        if(vehiculerequp.getStatus()!=null){
+            existingVehicule.setStatus(getStatus(vehiculerequp.getStatus()));
         }
         return vehiculeRep.save(existingVehicule);
     }

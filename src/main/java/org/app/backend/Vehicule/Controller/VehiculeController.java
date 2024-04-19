@@ -62,7 +62,7 @@ public class VehiculeController {
     @GetMapping
     public ResponseEntity<Page<VehiculeResp>> findAllPag(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "8") int size.
+            @RequestParam(defaultValue = "8") int size
 
     ){        Pageable pageable = PageRequest.of(page, size);
         Page<Vehicule> vehicules = vehiculeService.findAllpage(pageable);

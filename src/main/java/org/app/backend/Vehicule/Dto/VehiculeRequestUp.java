@@ -24,7 +24,7 @@ public class VehiculeRequestUp {
     @NotNull
     private boolean etat;
     @NotNull
-    private boolean status;
+    private String status;
     @NotNull
     private String type;
     @NotNull
