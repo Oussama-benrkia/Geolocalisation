@@ -1,7 +1,7 @@
 package org.app.backend.Config;
 
 import lombok.RequiredArgsConstructor;
-import org.app.backend.User.repo.IntRepUser;
+import org.app.backend.rep.IntRepUser;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
