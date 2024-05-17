@@ -30,6 +30,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/images/**").permitAll()
+                        .requestMatchers("/ws/**").permitAll()
+                        .requestMatchers("/topic/**").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/api/vehicule/**").permitAll()
                         .anyRequest().authenticated()
                 )
