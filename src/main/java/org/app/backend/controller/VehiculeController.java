@@ -29,11 +29,7 @@ public class VehiculeController {
     @GetMapping("/{matricule}")
     public ResponseEntity<VehiculeResp> findByMatricule(@PathVariable String matricule) {
         VehiculeResp response = new VehiculeResp(vehiculeService.findByMatricule(matricule));
-        if (response != null) {
-            return ResponseEntity.ok(response);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
+        return ResponseEntity.ok(response);
     }
     @GetMapping("/matricule/{matricule}/modele/{modele}")
     public ResponseEntity<List<VehiculeResp>> findByMatriculeAndModele(@PathVariable String matricule, @PathVariable String modele) {
@@ -75,30 +71,18 @@ public class VehiculeController {
     @PutMapping("/{id}")
     public ResponseEntity<VehiculeResp> editVehicule(@PathVariable long id, @Valid @ModelAttribute VehiculeRequestUp vehicule) {
         VehiculeResp response = new VehiculeResp(vehiculeService.editVehicule(id, vehicule));
-        if (response != null) {
-            return ResponseEntity.ok(response);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(response);
     }
     @PostMapping
     public ResponseEntity<VehiculeResp> createVehicule(@Valid @ModelAttribute VehiculeRequest vehicule) {
         VehiculeResp response = new VehiculeResp(vehiculeService.createVehicule(vehicule));
-        if (response != null) {
-            return ResponseEntity.ok(response);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(response);
     }
     @Transactional
     @DeleteMapping("/{id}")
     public  ResponseEntity<VehiculeResp> deleteVehicule(@PathVariable long id) {
         VehiculeResp response = new VehiculeResp(vehiculeService.deleteVehicule(id));
-        if (response != null) {
-            return ResponseEntity.ok(response);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(response);
     }
     private final VehiculeService vehiculeService;
 

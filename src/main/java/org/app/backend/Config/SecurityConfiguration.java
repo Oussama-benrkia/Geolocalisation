@@ -33,6 +33,8 @@ public class SecurityConfiguration {
 
                         .requestMatchers(HttpMethod.GET,"/api/images/**").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/api/vehicule/**").permitAll()
+                        .requestMatchers("/sendLocation").permitAll()  // Allow WebSocket connections
+
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
