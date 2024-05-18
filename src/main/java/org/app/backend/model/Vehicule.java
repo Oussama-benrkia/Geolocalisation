@@ -11,6 +11,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -19,23 +20,34 @@ import java.time.LocalDateTime;
 @Builder
 public class Vehicule {
     @Id
-    @GeneratedValue(strategy =GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(unique = true)
     private String matricule;
+
     private String nom;
     private String modele;
     private boolean etat;
+
     @Enumerated(EnumType.STRING)
     private Status status;
+
     @Enumerated(EnumType.STRING)
     private Type type;
+
     @CreationTimestamp
-    private LocalDateTime date_crt;
+    private LocalDateTime dateCrt;
+
     @UpdateTimestamp
-    private LocalDateTime date_upt;
+    private LocalDateTime dateUpt;
+
     private String image;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    public User user;
+    private User user;
+
+    @OneToMany(mappedBy = "vehicule", cascade = CascadeType.REMOVE)
+    private List<LocationData> locations;
 }
