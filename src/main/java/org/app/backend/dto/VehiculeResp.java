@@ -22,7 +22,11 @@ public class VehiculeResp {
     @SneakyThrows
     public VehiculeResp(Vehicule p){
         this.id=p.getId();
-        this.user=p.getUser().getId();
+        if (p.getUser() != null) {
+            this.user = p.getUser().getId();  // Assuming you have a field to store the user ID
+        } else {
+            this.user = null;  // or handle accordingly
+        }
         this.matricule=p.getMatricule();
         this.nom=p.getNom();
         this.modele=p.getModele();
