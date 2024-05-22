@@ -26,9 +26,9 @@ public class VehiculeController {
     public ResponseEntity<List<String>> getalltype(){
         return ResponseEntity.ok(vehiculeService.getalltype());
     }
-    @GetMapping("/{matricule}")
-    public ResponseEntity<VehiculeResp> findByMatricule(@PathVariable String matricule) {
-        VehiculeResp response = new VehiculeResp(vehiculeService.findByMatricule(matricule));
+    @GetMapping("/{id}")
+    public ResponseEntity<VehiculeResp> findByMatricule(@PathVariable Long id) {
+        VehiculeResp response = new VehiculeResp(vehiculeService.findByMatricule(id));
         return ResponseEntity.ok(response);
     }
     @GetMapping("/matricule/{matricule}/modele/{modele}")

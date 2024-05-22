@@ -54,8 +54,8 @@ public class VehiculeService {
     public List<String> getallStatus(){
         return enumToList(Status.values());
     }
-    public Vehicule findByMatricule(String matricule) {
-        return vehiculeRep.findByMatricule(matricule);
+    public Vehicule findByMatricule(Long matricule) {
+        return vehiculeRep.findById(matricule).orElse(null);
     }
     public List<Vehicule> findByMatriculeAndModele(String matricule, String modele) {
         return vehiculeRep.findByMatriculeAndModele(matricule, modele);
