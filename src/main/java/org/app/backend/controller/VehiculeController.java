@@ -26,9 +26,25 @@ public class VehiculeController {
     public ResponseEntity<List<String>> getalltype(){
         return ResponseEntity.ok(vehiculeService.getalltype());
     }
+    @GetMapping("/get/{mat}")
+    public ResponseEntity<VehiculeResp> findByMatricule(@PathVariable String mat) {
+        Vehicule vehicule = vehiculeService.findByMatricule2(mat);
+        if (vehicule == null) {
+            // Handle the case when the vehicule is not found
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        VehiculeResp response = new VehiculeResp(vehicule);
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<VehiculeResp> findByMatricule(@PathVariable Long id) {
-        VehiculeResp response = new VehiculeResp(vehiculeService.findByMatricule(id));
+        Vehicule vehicule = vehiculeService.findByMatricule(id);
+        if (vehicule == null) {
+            // Handle the case when the vehicule is not found
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        VehiculeResp response = new VehiculeResp(vehicule);
         return ResponseEntity.ok(response);
     }
     @GetMapping("/matricule/{matricule}/modele/{modele}")

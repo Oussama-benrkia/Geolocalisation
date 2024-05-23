@@ -4,10 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.app.backend.dto.RequestLocation;
 import org.app.backend.dto.ResponseLocation;
 import org.app.backend.service.LocationService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -40,5 +44,21 @@ public class LocationController {
         LocalDateTime endTime = LocalDateTime.parse(end);
         List<ResponseLocation> responseLocations = locationService.getLocationByVehicleAndDateRange(vehicleId, startTime, endTime);
         return ResponseEntity.ok(responseLocations);
+    }
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<?> handleMethodAr(
+            MethodArgumentNotValidException exp
+    ){
+        var errors=new HashMap<String , String>();
+        exp.getBindingResult().getAllErrors()
+                .forEach(objectError ->
+                {
+                    var fieldName=((FieldError)objectError).getField();
+                    var errorMes=objectError.getDefaultMessage();
+                    errors.put(fieldName,errorMes);
+
+                });
+
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 }

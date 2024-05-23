@@ -38,6 +38,8 @@ public class SecurityConfiguration  implements WebMvcConfigurer {
 
                         .requestMatchers(HttpMethod.GET,"/api/images/**").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/api/vehicule/**").permitAll()
+                        .requestMatchers("/api/location/**").permitAll()
+
                         .requestMatchers("/sendLocation").permitAll()  // Allow WebSocket connections
 
                         .anyRequest().authenticated()

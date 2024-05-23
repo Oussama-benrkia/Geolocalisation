@@ -132,13 +132,16 @@ public class VehiculeService {
     public Vehicule deleteVehicule(long id) {
         Vehicule old_v = vehiculeRep.findById(id).orElse(null);
         if (old_v != null) {
-            if (!old_v.getImage().isEmpty()) {
+            if (old_v.getImage()!=null||!old_v.getImage().isEmpty()) {
                 imgService.deleteimage(old_v.getImage());
             }
             vehiculeRep.delete(old_v);
             return old_v;
         }
         return null;
+    }
+    public Vehicule findByMatricule2(String id) {
+        return vehiculeRep.findByMatricule(id);
     }
     private final VehiculeRep vehiculeRep;
     private final ImgService imgService;

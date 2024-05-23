@@ -16,5 +16,10 @@ public class RequestLocation {
     @NotEmpty
     double longitude;
     @NotEmpty
-    Long Vehicle;
+    Long car;
+    @NotEmpty
+    private String etat;
+    @NotEmpty
+    private String status;
+
 }
