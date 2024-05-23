@@ -96,9 +96,13 @@ public class VehiculeController {
     }
     @Transactional
     @DeleteMapping("/{id}")
-    public  ResponseEntity<VehiculeResp> deleteVehicule(@PathVariable long id) {
-        VehiculeResp response = new VehiculeResp(vehiculeService.deleteVehicule(id));
-        return ResponseEntity.ok(response);
+    public ResponseEntity<VehiculeResp> deleteVehicule(@PathVariable long id) {
+        Vehicule vehicule = vehiculeService.deleteVehicule(id);
+        if(vehicule!=null){
+            return ResponseEntity.ok(new VehiculeResp(vehicule));
+        }else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
     private final VehiculeService vehiculeService;
 
