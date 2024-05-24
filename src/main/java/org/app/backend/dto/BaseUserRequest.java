@@ -23,6 +23,5 @@ public class BaseUserRequest {
     private String email;
     @NotEmpty
     private String password;
-    @NotNull
     private MultipartFile image;
 }

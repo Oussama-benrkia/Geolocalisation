@@ -10,6 +10,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -32,17 +33,17 @@ public class LocationController {
         if (responseLocation != null) {
             return ResponseEntity.ok(responseLocation);
         } else {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.ok(null);
         }
     }
-    @GetMapping("/range/{vehicleId}")
+    @GetMapping("/range/{Matricule}")
     public ResponseEntity<List<ResponseLocation>> getLocationByVehicleAndDateRange(
             @RequestParam String start,
             @RequestParam String end,
-            @PathVariable Long vehicleId) {
-        LocalDateTime startTime = LocalDateTime.parse(start);
-        LocalDateTime endTime = LocalDateTime.parse(end);
-        List<ResponseLocation> responseLocations = locationService.getLocationByVehicleAndDateRange(vehicleId, startTime, endTime);
+            @PathVariable String Matricule) {
+        LocalDate startDate = LocalDate.parse(start);
+        LocalDate endDate = LocalDate.parse(end);
+        List<ResponseLocation> responseLocations = locationService.getLocationByVehicleAndDateRange(Matricule, startDate.atStartOfDay(), endDate.atTime(23, 59, 59));
         return ResponseEntity.ok(responseLocations);
     }
     @ExceptionHandler(MethodArgumentNotValidException.class)

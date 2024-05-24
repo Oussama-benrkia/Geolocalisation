@@ -3,10 +3,13 @@ package org.app.backend.controller;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.app.backend.dto.ResponseLocation;
 import org.app.backend.dto.VehiculeRequest;
 import org.app.backend.dto.VehiculeRequestUp;
 import org.app.backend.dto.VehiculeResp;
+import org.app.backend.model.LocationData;
 import org.app.backend.model.Vehicule;
+import org.app.backend.service.LocationService;
 import org.app.backend.service.VehiculeService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -65,9 +68,19 @@ public class VehiculeController {
             @RequestParam(defaultValue = "")String search
     ) {
         List<Vehicule> vehicules = vehiculeService.findAll(search);
+
         List<VehiculeResp> vehiculesResp = new ArrayList<>();
         for (Vehicule vehicule : vehicules) {
             vehiculesResp.add(new VehiculeResp(vehicule));
+        }
+        for (VehiculeResp vehicule : vehiculesResp) {
+            ResponseLocation lct=location.getLastLocationByVehicleId(vehicule.getId());
+            if (lct != null) {
+                List<Double> po=new ArrayList<>();
+                po.add(lct.getLatitude());
+                po.add(lct.getLongitude());
+                vehicule.setLastpostion(po);
+            }
         }
         return ResponseEntity.ok(vehiculesResp);
     }
@@ -105,5 +118,6 @@ public class VehiculeController {
         }
     }
     private final VehiculeService vehiculeService;
+    private final LocationService location;
 
 }

@@ -16,10 +16,13 @@ public class ResponseLocation {
     Double longitude;
     Long vehicule ;
     LocalDateTime dateTime;
+    String status;
     public ResponseLocation(LocationData locationData) {
         this.dateTime = locationData.getDateCrt();
         this.latitude = locationData.getX();
         this.longitude = locationData.getY();
-        this.vehicule = locationData.getVehicule().getId(); // Ensure that you are handling potential nulls appropriately.
+        this.vehicule = locationData.getVehicule().getId();
+        this.status=locationData.getVehicule().getStatus().toString();
+        // Ensure that you are handling potential nulls appropriately.
     }
 }

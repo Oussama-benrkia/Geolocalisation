@@ -64,9 +64,14 @@ public class LocationService {
         return null;
     }
 
-    public List<ResponseLocation> getLocationByVehicleAndDateRange(Long vehicleId, LocalDateTime start, LocalDateTime end) {
-        List<LocationData> locationDataList = repLocation.findByVehiculeIdAndDateCrtBetween(vehicleId, start, end);
+    public List<ResponseLocation> getLocationByVehicleAndDateRange(String vehicleId, LocalDateTime start, LocalDateTime end) {
+        Vehicule v=veh.findByMatricule(vehicleId);
+        if (v==null) {
+            return null;
+        }
+        List<LocationData> locationDataList = repLocation.findByVehiculeIdAndDateCrtBetween(v.getId(), start, end);
         return locationDataList.stream().map(ResponseLocation::new).collect(Collectors.toList());
     }
+    private final VehiculeRep veh;
 }
 

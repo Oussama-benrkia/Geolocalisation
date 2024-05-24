@@ -5,6 +5,8 @@ import org.app.backend.model.enumm.Status;
 import org.app.backend.model.enumm.Type;
 import org.app.backend.model.Vehicule;
 
+import java.util.List;
+
 @Builder
 @Data
 @AllArgsConstructor
@@ -19,6 +21,7 @@ public class VehiculeResp {
     private Type type;
     private Long user;
     private String image;
+    private List<Double> lastpostion;
     @SneakyThrows
     public VehiculeResp(Vehicule p){
         this.id=p.getId();
@@ -34,5 +37,6 @@ public class VehiculeResp {
         this.status=p.getStatus();
         this.type=p.getType();
         this.image=p.getImage();
+        lastpostion=null;
     }
 }
